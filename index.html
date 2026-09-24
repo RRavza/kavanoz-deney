@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kavanoz Deneyi</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Kulüp Logosu" class="logo">
+  </header>
+  <main>
+    <div id="formView">
+      <div style="text-align: center;">
+        <h1>Kavanozda kaç tane kilit ve misket var?</h1>
+        <p class="lead">Tahminini yaz, kalabalığın ne düşündüğünü gör.</p>
+      </div>
+      <form id="guessForm" class="panel">
+        <label for="guess">Tahminin</label>
+        <input type="text" id="guess" placeholder="Örn. 350" inputmode="numeric">
+        
+        <label for="faculty" style="margin-top: 16px;">Fakülten</label>
+        <select id="faculty"></select>
+        
+        <p id="err"></p>
+        <button type="submit" id="send">Tahminimi Gönder</button>
+      </form>
+    </div>
+
+    <div id="statsView" hidden>
+      <p class="mine">Senin tahminin: <b id="myGuess"></b></p>
+      <div class="panel">
+        <ul class="stats">
+          <li><small>Bugüne kadar tahmin yapan kişi sayısı:</small> <span id="sCount"></span></li>
+          <li><small>Şu anki kitle ortalaması:</small> <span id="sMean"></span></li>
+          <li><small>Şu an ortalaması gerçeğe en yakın fakülte:</small> <span id="sFac"></span></li>
+        </ul>
+        <div class="chartbox">
+          <canvas id="chart"></canvas>
+        </div>
+        <a id="wa" class="wa" target="_blank">Arkadaşına Meydan Oku (WhatsApp)</a>
+      </div>
+      <div class="countdown">
+        <p id="cdText"></p>
+        <div id="cd"></div>
+        <div id="reveal" hidden></div>
+      </div>
+    </div>
+
+    <div class="info">
+      <h2>Deney hakkında</h2>
+      <p>1906'da İngiliz bilim insanı Sir Francis Galton, Plymouth'taki bir hayvan fuarına gitti. Ziyaretçiler bir öküzün kesilip temizlendikten sonraki ağırlığını tahmin ediyordu. Aralarında çiftçiler de vardı, hiçbir şey bilmeyenler de. Galton yaklaşık 800 biletin içinden okunabilen 787'sini topladı ve ortalamaya baktı.</p>
+      <p>Kalabalığın ortancası 1207 librelikti. Öküz gerçekte 1198 librelik geliyordu; hata yüzde 1'in altındaydı. Tek tek insanlar ciddi şekilde yanılıyordu, ama hatalar birbirini götürdü. Galton bulguyu 1907'de Nature dergisinde "Vox Populi" adıyla yayımladı. Bugün bu olguya <b>Kitlelerin Bilgeliği</b> diyoruz.</p>
+      <p>Bu deneyde aynı şeyi kavanozdaki objelerle deniyoruz. Herkes bağımsız tahmin ettiğinde, kitle en iyi bireyden daha iyi olabilir mi?</p>
+      
+      <h2 style="margin-top: 32px;">El-Biruni kimdir?</h2>
+      <p>El-Biruni (973-1048), bugünkü Özbekistan'daki Harezm bölgesinde doğdu. Astronomi, matematik, coğrafya, tarih, eczacılık ve mineralojiyi birlikte çalışan bir bilgindi. Uzun yıllar Gazneli Mahmud'un sarayında yaşadı ve Hindistan'a yaptığı gezilerde yerel bilimi doğrudan gözlemledi.</p>
+      <p>Dünyanın yarıçapını dağ yüksekliği ve ufuk açısıyla ölçen zekice bir yöntem geliştirdi. Kitâbü'l-Hind adlı eseri karşılaştırmalı kültür araştırmasının öncülerinden sayılır. el-Kanûn el-Mes'ûdî astronomi ansiklopedisidir; es-Saydana ise ilaç bilgisi üzerinedir.</p>
+      <p>Dünyanın kendi ekseni etrafında dönme ihtimalini ciddiyetle tartışması da dikkat çekicidir. Yöntemi net: gözlemle, ölç, karşılaştır.</p>
+    </div>
+  </main>
+  <footer>
+    Bu web site deneyi test etmek için Biruni Üniversitesi İyiliğin Geleceği Atom Birimi tarafından kuruldu.
+  </footer>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
