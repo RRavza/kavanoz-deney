@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Yönetim</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<section class="panel" id="login"><h2>Yönetici girişi</h2>
+<input id="em" type="email" placeholder="E-posta"><input id="pw" type="password" placeholder="Şifre" style="margin-top:10px">
+<button id="in">Giriş yap</button></section>
+<section class="panel" id="tools" hidden><h2>Gerçek sayı</h2>
+<input id="real" type="text" inputmode="numeric" placeholder="Kavanozdaki gerçek sayı">
+<button id="calc">Kaydet ve en yakın fakülteyi hesapla</button>
+<button id="rev" style="background:#5fd1c4">Sonucu ilan et (reveal)</button>
+<p id="out"></p></section>
+</main>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { firebaseConfig } from "./firebase-config.js";
+const app = initializeApp(firebaseConfig), db = getFirestore(app), auth = getAuth(app), $ = id => document.getElementById(id);
+$("in").onclick = async () => { try { await signInWithEmailAndPassword(auth, $("em").value, $("pw").value);
+  $("login").hidden = true; $("tools").hidden = false; } catch (e) { alert("Giriş başarısız"); } };
+async function analyse() {
+  const real = Number($("real").value); if (!real) throw new Error("Sayı gir");
+  const g = (await getDocs(collection(db, "guesses"))).docs.map(d => d.data()), f = {};
+  g.forEach(x => (f[x.faculty] ??= []).push(x.value));
+  let best = null, bd = Infinity;
+  for (const k in f) { const m = f[k].reduce((a, b) => a + b, 0) / f[k].length; if (Math.abs(m - real) < bd) { bd = Math.abs(m - real); best = k; } }
+  const top = g.reduce((a, b) => Math.abs(b.value - real) < Math.abs(a.value - real) ? b : a);
+  return { real, best, top };
+}
+$("calc").onclick = async () => { try { const { real, best } = await analyse();
+  await setDoc(doc(db, "secret", "answer"), { value: real });
+  await setDoc(doc(db, "stats", "closest"), { faculty: best });
+  $("out").textContent = "Kaydedildi. En yakın fakülte: " + best; } catch (e) { $("out").textContent = e.message; } };
+$("rev").onclick = async () => { try { const { real, top } = await analyse();
+  await setDoc(doc(db, "stats", "reveal"), { answer: real, bestGuess: top.value, bestFaculty: top.faculty });
+  $("out").textContent = "İlan edildi. En iyi tahmin: " + top.value; } catch (e) { $("out").textContent = e.message; } };
+</script></body></html>
