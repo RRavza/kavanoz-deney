@@ -8,7 +8,7 @@ const EVENT_DATE = new Date("2026-10-15T18:00:00+03:00");
 const EVENT_LABEL = "15 Ekim 2026, 18:00";
 
 // FAKÜLTELER: Listeyi istediğin gibi düzenle (firestore.rules'taki liste ile aynı olmalı değil, sadece uzunluk sınırı var)
-const FACULTIES = ["Tıp Fakültesi","Diş Hekimliği Fakültesi","Eczacılık Fakültesi","Mühendislik ve Doğa Bilimleri Fakültesi","Eğitim Fakültesi","Sağlık Bilimleri Fakültesi","İşletme Fakültesi","Hukuk Fakültesi","Diğer"];
+const FACULTIES = ["Tıp Fakültesi","Diş Hekimliği Fakültesi","Eczacılık Fakültesi","Mühendislik ve Doğa Bilimleri Fakültesi","Eğitim Fakültesi","Sağlık Bilimleri Fakültesi","Uygulamalı Bilimler Fakültesi","Diğer"];
 
 const db = getFirestore(initializeApp(firebaseConfig));
 const $ = id => document.getElementById(id);
