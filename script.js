@@ -92,3 +92,12 @@ function startCountdown() {
   };
   tick(); setInterval(tick, 1000);
        }
+window.toggleLanguage = function() {
+  document.body.classList.toggle('en-mode');
+  const btn = document.getElementById('lang-btn');
+  if (document.body.classList.contains('en-mode')) {
+    btn.innerText = 'TR';
+  } else {
+    btn.innerText = 'EN';
+  }
+};
