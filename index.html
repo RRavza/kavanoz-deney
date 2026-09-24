@@ -9,39 +9,85 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+  <!-- Sağ üst köşedeki dil butonu -->
+  <button id="lang-btn" onclick="toggleLanguage()" style="position: absolute; top: 20px; right: 20px; padding: 8px 15px; cursor: pointer; border-radius: 5px; font-weight: bold; background: #ffaa00; border: none; color: #1a1a2e; z-index: 1000;">EN</button>
+
   <header>
     <img src="logo.png" alt="Kulüp Logosu" class="logo">
   </header>
   <main>
     <div id="formView">
       <div style="text-align: center;">
-        <h1>Kavanozda kaç tane var?</h1>
-        <p class="lead">Tahminini yaz, kalabalığın ne düşündüğünü gör.</p>
+        <!-- Kavanoz Görseli -->
+        <img src="kavanoz.jpg" alt="Devre elemanları kavanozu" style="width: 100%; max-width: 250px; display: block; margin: 0 auto 20px auto; border-radius: 10px;">
+        
+        <h1>
+          <span class="lang-tr">Kavanozda kaç tane var?</span>
+          <span class="lang-en">How many items are in the jar?</span>
+        </h1>
+        <p class="lead">
+          <span class="lang-tr">Tahminini yaz, kalabalığın ne düşündüğünü gör.</span>
+          <span class="lang-en">Enter your guess and see what the crowd thinks.</span>
+        </p>
       </div>
       <form id="guessForm" class="panel">
-        <label for="guess">Tahminin</label>
+        <label for="guess">
+          <span class="lang-tr">Tahminin</span>
+          <span class="lang-en">Your Guess</span>
+        </label>
         <input type="text" id="guess" placeholder="Örn. 350" inputmode="numeric">
         
-        <label for="faculty" style="margin-top: 16px;">Fakülten</label>
+        <label for="faculty" style="margin-top: 16px;">
+          <span class="lang-tr">Fakülten</span>
+          <span class="lang-en">Your Faculty</span>
+        </label>
         <select id="faculty"></select>
         
         <p id="err"></p>
-        <button type="submit" id="send">Tahminimi Gönder</button>
+        <button type="submit" id="send">
+          <span class="lang-tr">Tahminimi Gönder</span>
+          <span class="lang-en">Submit My Guess</span>
+        </button>
       </form>
     </div>
 
     <div id="statsView" hidden>
-      <p class="mine">Senin tahminin: <b id="myGuess"></b></p>
+      <p class="mine">
+        <span class="lang-tr">Senin tahminin:</span>
+        <span class="lang-en">Your guess:</span> 
+        <b id="myGuess"></b>
+      </p>
       <div class="panel">
         <ul class="stats">
-          <li><small>Bugüne kadar tahmin yapan kişi sayısı:</small> <span id="sCount"></span></li>
-          <li><small>Şu anki kitle ortalaması:</small> <span id="sMean"></span></li>
-          <li><small>Şu an ortalaması gerçeğe en yakın fakülte:</small> <span id="sFac"></span></li>
+          <li>
+            <small>
+              <span class="lang-tr">Bugüne kadar tahmin yapan kişi sayısı:</span>
+              <span class="lang-en">Total number of guesses so far:</span>
+            </small> 
+            <span id="sCount"></span>
+          </li>
+          <li>
+            <small>
+              <span class="lang-tr">Şu anki kitle ortalaması:</span>
+              <span class="lang-en">Current crowd average:</span>
+            </small> 
+            <span id="sMean"></span>
+          </li>
+          <li>
+            <small>
+              <span class="lang-tr">Şu an ortalaması gerçeğe en yakın fakülte:</span>
+              <span class="lang-en">Faculty closest to the actual value:</span>
+            </small> 
+            <span id="sFac"></span>
+          </li>
         </ul>
         <div class="chartbox">
           <canvas id="chart"></canvas>
         </div>
-        <a id="wa" class="wa" target="_blank">Arkadaşına Meydan Oku (WhatsApp)</a>
+        <a id="wa" class="wa" target="_blank">
+          <span class="lang-tr">Arkadaşına Meydan Oku (WhatsApp)</span>
+          <span class="lang-en">Challenge a Friend (WhatsApp)</span>
+        </a>
       </div>
       <div class="countdown">
         <p id="cdText"></p>
@@ -51,19 +97,44 @@
     </div>
 
     <div class="info">
-      <h2>Deney hakkında</h2>
-      <p>1906'da İngiliz bilim insanı Sir Francis Galton, Plymouth'taki bir hayvan fuarına gitti. Ziyaretçiler bir öküzün kesilip temizlendikten sonraki ağırlığını tahmin ediyordu. Aralarında çiftçiler de vardı, hiçbir şey bilmeyenler de. Galton yaklaşık 800 biletin içinden okunabilen 787'sini topladı ve ortalamaya baktı.</p>
-      <p>Kalabalığın ortancası 1207 librelikti. Öküz gerçekte 1198 librelik geliyordu; hata yüzde 1'in altındaydı. Tek tek insanlar ciddi şekilde yanılıyordu, ama hatalar birbirini götürdü. Galton bulguyu 1907'de Nature dergisinde "Vox Populi" adıyla yayımladı. Bugün bu olguya <b>Kitlelerin Bilgeliği</b> diyoruz.</p>
-      <p>Bu deneyde aynı şeyi kavanozdaki objelerle deniyoruz. Herkes bağımsız tahmin ettiğinde, kitle en iyi bireyden daha iyi olabilir mi?</p>
+      <h2>
+        <span class="lang-tr">Deney hakkında</span>
+        <span class="lang-en">About the Experiment</span>
+      </h2>
+      <p>
+        <span class="lang-tr">1906'da İngiliz bilim insanı Sir Francis Galton, Plymouth'taki bir hayvan fuarına gitti. Ziyaretçiler bir öküzün kesilip temizlendikten sonraki ağırlığını tahmin ediyordu. Aralarında çiftçiler de vardı, hiçbir şey bilmeyenler de. Galton yaklaşık 800 biletin içinden okunabilen 787'sini topladı ve ortalamaya baktı.</span>
+        <span class="lang-en">In 1906, British scientist Sir Francis Galton visited a livestock fair in Plymouth. Visitors were guessing the weight of an ox after it was slaughtered and dressed. There were farmers as well as people who knew nothing among them. Galton collected 787 legible tickets out of about 800 and looked at the average.</span>
+      </p>
+      <p>
+        <span class="lang-tr">Kalabalığın ortancası 1207 librelikti. Öküz gerçekte 1198 librelik geliyordu; hata yüzde 1'in altındaydı. Tek tek insanlar ciddi şekilde yanılıyordu, ama hatalar birbirini götürdü. Galton bulguyu 1907'de Nature dergisinde "Vox Populi" adıyla yayımladı. Bugün bu olguya <b>Kitlelerin Bilgeliği</b> diyoruz.</span>
+        <span class="lang-en">The median of the crowd was 1207 lbs. The ox actually weighed 1198 lbs; the error was under 1 percent. Individual people were seriously wrong, but the errors canceled each other out. Galton published the finding in the journal Nature in 1907 under the name "Vox Populi". Today we call this phenomenon the <b>Wisdom of the Crowds</b>.</span>
+      </p>
+      <p>
+        <span class="lang-tr">Bu deneyde aynı şeyi kavanozdaki objelerle deniyoruz. Herkes bağımsız tahmin ettiğinde, kitle en iyi bireyden daha iyi olabilir mi?</span>
+        <span class="lang-en">In this experiment, we are trying the same thing with objects in a jar. When everyone guesses independently, can the crowd be better than the best individual?</span>
+      </p>
       
-      <h2 style="margin-top: 32px;">El-Biruni kimdir?</h2>
-      <p>El-Biruni (973-1048), bugünkü Özbekistan'daki Harezm bölgesinde doğdu. Astronomi, matematik, coğrafya, tarih, eczacılık ve mineralojiyi birlikte çalışan bir bilgindi. Uzun yıllar Gazneli Mahmud'un sarayında yaşadı ve Hindistan'a yaptığı gezilerde yerel bilimi doğrudan gözlemledi.</p>
-      <p>Dünyanın yarıçapını dağ yüksekliği ve ufuk açısıyla ölçen zekice bir yöntem geliştirdi. Kitâbü'l-Hind adlı eseri karşılaştırmalı kültür araştırmasının öncülerinden sayılır. el-Kanûn el-Mes'ûdî astronomi ansiklopedisidir; es-Saydana ise ilaç bilgisi üzerinedir.</p>
-      <p>Dünyanın kendi ekseni etrafında dönme ihtimalini ciddiyetle tartışması da dikkat çekicidir. Yöntemi net: gözlemle, ölç, karşılaştır.</p>
+      <h2 style="margin-top: 32px;">
+        <span class="lang-tr">El-Biruni kimdir?</span>
+        <span class="lang-en">Who is Al-Biruni?</span>
+      </h2>
+      <p>
+        <span class="lang-tr">El-Biruni (973-1048), bugünkü Özbekistan'daki Harezm bölgesinde doğdu. Astronomi, matematik, coğrafya, tarih, eczacılık ve mineralojiyi birlikte çalışan bir bilgindi. Uzun yıllar Gazneli Mahmud'un sarayında yaşadı ve Hindistan'a yaptığı gezilerde yerel bilimi doğrudan gözlemledi.</span>
+        <span class="lang-en">Al-Biruni (973-1048) was born in the Khwarazm region in present-day Uzbekistan. He was a polymath who studied astronomy, mathematics, geography, history, pharmacology, and mineralogy. He lived at the court of Mahmud of Ghazni for many years and directly observed local science during his travels to India.</span>
+      </p>
+      <p>
+        <span class="lang-tr">Dünyanın yarıçapını dağ yüksekliği ve ufuk açısıyla ölçen zekice bir yöntem geliştirdi. Kitâbü'l-Hind adlı eseri karşılaştırmalı kültür araştırmasının öncülerinden sayılır. el-Kanûn el-Mes'ûdî astronomi ansiklopedisidir; es-Saydana ise ilaç bilgisi üzerinedir.</span>
+        <span class="lang-en">He developed an ingenious method of measuring the radius of the earth using mountain height and the angle of the horizon. His work Kitab al-Hind is considered one of the pioneers of comparative cultural studies. Al-Qanun al-Mas'udi is an encyclopedia of astronomy; as-Saydana is on pharmacology.</span>
+      </p>
+      <p>
+        <span class="lang-tr">Dünyanın kendi ekseni etrafında dönme ihtimalini ciddiyetle tartışması da dikkat çekicidir. Yöntemi net: gözlemle, ölç, karşılaştır.</span>
+        <span class="lang-en">It is also noteworthy that he seriously discussed the possibility of the Earth rotating on its own axis. His method is clear: observe, measure, compare.</span>
+      </p>
     </div>
   </main>
   <footer>
-    Bu web site deneyi test etmek için Biruni Üniversitesi İyiliğin Geleceği Atom Birimi tarafından kuruldu.
+    <span class="lang-tr">Bu web site deneyi test etmek için Biruni Üniversitesi İyiliğin Geleceği Atom Birimi tarafından kuruldu.</span>
+    <span class="lang-en">This website experiment was set up by the Biruni University Future of Goodness Atom Unit for testing purposes.</span>
   </footer>
   <script type="module" src="script.js"></script>
 </body>
